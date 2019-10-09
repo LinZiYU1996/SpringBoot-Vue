@@ -11,12 +11,17 @@ import {getRequest} from './utils/api'
 import {postRequest} from './utils/api'
 import {deleteRequest} from './utils/api'
 import {putRequest} from './utils/api'
+import store from './store'
+// import Mock from "./javascript/mock"
+import Mock from '@/mock'
+process.env.Mock && require('./mock.js')
+
 
 
 
 Vue.use(ElementUI)
 Vue.use(VueAxios, axios)
-
+Vue.use(Mock)
 
 
 Vue.prototype.getRequest = getRequest;
@@ -27,12 +32,39 @@ Vue.prototype.putRequest = putRequest;
 
 
 Vue.config.productionTip = false
-axios.defaults.baseURL="http://localhost:8082/"
+axios.defaults.baseURL="http://localhost:8080/"
+
+// 引入mockjs
+require('./mock')
+
+// router.beforeEach((to, from, next)=> {
+//   if (to.name == 'Login') {
+//     next();
+//     return;
+//   }
+//   var name = store.state.user.name;
+//   if (name == '未登录') {
+//     if (to.meta.requireAuth || to.name == null) {
+//       next({path: '/', query: {redirect: to.path}})
+//     } else {
+//       next();
+//     }
+//   } else {
+//     initMenu(router, store);
+//     if(to.path=='/chat')
+//       store.commit("updateMsgList", []);
+//     next();
+//   }
+// }
+// )
+
+
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>',
   render: h => h(App)

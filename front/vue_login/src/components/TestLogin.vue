@@ -76,20 +76,22 @@ export default {
         if (valid) {
           var _this = this;
           this.loading = true;
-          this.postRequest("/login", {
-            // name: this.loginForm.name,
-            // password: this.loginForm.password
-            // _this.$store.commit("login", data.obj)
+          this.postRequest("/api/test", {
+            name: this.loginForm.name,
+            password: this.loginForm.password
+            
 
           }).then(resp => {
             _this.loading = false;
-            alert("aaa");
-            alert(resp.data);
+            
             if (resp && resp.status == 200) {
               var data = resp.data;
-              alert(data);
-              _this.$store.commit("login", data.obj);
+              console.log("data.obj------" +  data.obj);
+              console.log("data.name-------" + data.name);
+              // console.log("data.object-------" + data.object);
+              _this.$store.commit("login", data.obj.user);
               var path = _this.$route.query.redirect;
+              console.log("xxxxxxxxxxxxxxxxxxxxx")
               _this.$router.replace({
                 path: path == "/" || path == undefined ? "/home" : path
               });
